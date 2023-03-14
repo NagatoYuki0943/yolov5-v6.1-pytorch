@@ -26,7 +26,7 @@ classes_path        = 'model_data/voc_classes.txt'
 #   train_percent用于指定(训练集+验证集)中训练集与验证集的比例，默认情况下 训练集:验证集 = 9:1
 #   仅在annotation_mode为0和1的时候有效
 #--------------------------------------------------------------------------------------------------------------------------------#
-trainval_percent    = 0.9
+trainval_percent    = 1     # 要设置为1，因为yolo数据集默认没有测试集合
 train_percent       = 0.9
 #-------------------------------------------------------#
 #   指向VOC数据集所在的文件夹
@@ -83,8 +83,9 @@ if __name__ == "__main__":
         trainval= random.sample(list,tv)  
         train   = random.sample(trainval,tr)  
         
-        print("train and val size",tv)
-        print("train size",tr)
+        print("train and val size:",tv)
+        print("train size:",tr)
+        print("val size:",tv - tr)
         ftrainval   = open(os.path.join(saveBasePath,'trainval.txt'), 'w')  
         ftest       = open(os.path.join(saveBasePath,'test.txt'), 'w')  
         ftrain      = open(os.path.join(saveBasePath,'train.txt'), 'w')  
