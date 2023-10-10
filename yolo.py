@@ -38,6 +38,13 @@ class YOLO(object):
         #---------------------------------------------------------------------#
         "input_shape"       : [640, 640],
         #------------------------------------------------------#
+        #   backbone        cspdarknet（默认）
+        #                   convnext_tiny
+        #                   convnext_small
+        #                   swin_transfomer_tiny
+        #------------------------------------------------------#
+        "backbone"          : 'cspdarknet',
+        #------------------------------------------------------#
         #   phi             所使用的YoloV5的版本。n、s、m、l、x
         #------------------------------------------------------#
         "phi"               : 's',
@@ -101,7 +108,7 @@ class YOLO(object):
         #---------------------------------------------------#
         #   建立yolo模型，载入yolo模型的权重
         #---------------------------------------------------#
-        self.net    = YoloBody(self.anchors_mask, self.num_classes, self.phi)
+        self.net    = YoloBody(self.anchors_mask, self.num_classes, self.phi, backbone = self.backbone, input_shape = self.input_shape)
         device      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.net.load_state_dict(torch.load(self.model_path, map_location=device))
         self.net    = self.net.eval()
